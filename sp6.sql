@@ -10,7 +10,7 @@ CREATE PROCEDURE dbo.uspGreaterThanFiveLoansOut
 
 AS
 
-SELECT a.Name, a.Address, COUNT(b.CardNo) AS 'Out:'
+SELECT a.Name AS 'Name:', a.Address AS 'Address:', COUNT(b.CardNo) AS 'Out:'
 FROM BORROWER a
 INNER JOIN BOOK_LOANS b ON a.CardNo = b.CardNo
 GROUP BY Name, Address
