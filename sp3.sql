@@ -7,15 +7,18 @@ CREATE PROCEDURE dbo.uspDateOutNull
 
 AS
 
-SELECT a.Name AS 'Name:'
-FROM BORROWER a
-INNER JOIN BOOK_LOANS b ON a.CardNo = b.CardNo
-WHERE a.CardNo NOT LIKE b.CardNo 
-
-SELECT a.CardNo
-FROM BORROWER a
-EXCEPT 
-SELECT b.CardNo 
-FROM BOOK_LOANS b
+WITH
+	cteBorrower (CardNo)
+	AS
+	(
+		SELECT CardNo
+		FROM BORROWER
+		EXCEPT
+		SELECT CardNo
+		FROM BOOK_LOANS
+	)
+SELECT c.Name, c.CardNo
+FROM BORROWER c
+INNER JOIN cteBorrower e ON c.CardNo = e.CardNo
 
 GO
